@@ -1,0 +1,133 @@
+terminate called after throwing an instance of 'char const*'
+terminate called after throwing an instance of 'char const*'
+terminate called after throwing an instance of 'char const*'
+[alma01:2574603] *** Process received signal ***
+terminate called after throwing an instance of 'char const*'
+[alma01:2574611] *** Process received signal ***
+[alma01:2574611] Signal: Aborted (6)
+[alma01:2574611] Signal code:  (-6)
+terminate called after throwing an instance of 'char const*'
+[alma01:2574609] *** Process received signal ***
+[alma01:2574609] Signal: Aborted (6)
+[alma01:2574609] Signal code:  (-6)
+terminate called after throwing an instance of 'char const*'
+[alma01:2574604] *** Process received signal ***
+[alma01:2574604] Signal: Aborted (6)
+[alma01:2574604] Signal code:  (-6)
+terminate called after throwing an instance of 'char const*'
+[alma01:2574613] *** Process received signal ***
+[alma01:2574613] Signal: Aborted (6)
+[alma01:2574613] Signal code:  (-6)
+terminate called after throwing an instance of 'char const*'
+[alma01:2574607] *** Process received signal ***
+[alma01:2574607] Signal: Aborted (6)
+[alma01:2574607] Signal code:  (-6)
+[alma01:2574605] *** Process received signal ***
+[alma01:2574605] Signal: Aborted (6)
+[alma01:2574605] Signal code:  (-6)
+[alma01:2574605] [ 0] [alma01:2574615] *** Process received signal ***
+[alma01:2574615] Signal: Aborted (6)
+[alma01:2574615] Signal code:  (-6)
+[alma01:2574615] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7f85b3460990]
+[alma01:2574603] Signal: Aborted (6)
+[alma01:2574603] Signal code:  (-6)
+[alma01:2574603] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7f7ce6aa1990]
+[alma01:2574603] [ 1] [alma01:2574604] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7f86d9e64990]
+[alma01:2574604] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7f86d9ac952f]
+[alma01:2574604] [ 2] [alma01:2574611] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7f05db4de990]
+[alma01:2574611] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7f05db14352f]
+[alma01:2574611] [ 2] [alma01:2574607] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7f673c007990]
+[alma01:2574607] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7f673bc6c52f]
+[alma01:2574607] [ 2] [alma01:2574609] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7fee0db4d990]
+[alma01:2574609] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7fee0d7b252f]
+[alma01:2574613] [ 0] /lib64/libpthread.so.0(+0x12990)[0x7f9ef83d6990]
+[alma01:2574613] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7f9ef803b52f]
+[alma01:2574613] [ 2] /lib64/libpthread.so.0(+0x12990)[0x7fb0bb1bf990]
+[alma01:2574605] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7fb0bae2452f]
+[alma01:2574605] [ 2] /lib64/libc.so.6(abort+0x127)[0x7fb0badf7e65]
+[alma01:2574605] [ 3] [alma01:2574615] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x7f85b30c552f]
+[alma01:2574615] [ 2] /lib64/libc.so.6(abort+0x127)[0x7f85b3098e65]
+[alma01:2574615] [ 3] /lib64/libc.so.6(gsignal+0x10f)[0x7f7ce670652f]
+[alma01:2574603] [ 2] /lib64/libc.so.6(abort+0x127)[0x7f7ce66d9e65]
+[alma01:2574603] [ 3] /lib64/libc.so.6(abort+0x127)[0x7f86d9a9ce65]
+[alma01:2574604] [ 3] /lib64/libc.so.6(abort+0x127)[0x7f05db116e65]
+[alma01:2574611] [ 3] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7f05dbb1bbfd]
+[alma01:2574611] [ 4] [alma01:2574609] [ 2] /lib64/libc.so.6(abort+0x127)[0x7fee0d785e65]
+[alma01:2574609] [ 3] /lib64/libc.so.6(abort+0x127)[0x7f673bc3fe65]
+[alma01:2574607] [ 3] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7f673c644bfd]
+[alma01:2574607] [ 4] /lib64/libc.so.6(abort+0x127)[0x7f9ef800ee65]
+[alma01:2574613] [ 3] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7fb0bb7fcbfd]
+[alma01:2574605] [ 4] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7f7ce70debfd]
+[alma01:2574603] [ 4] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7f7ce70f038a]
+[alma01:2574603] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7f85b3a9dbfd]
+[alma01:2574615] [ 4] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7f85b3aaf38a]
+[alma01:2574615] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7f86da4a1bfd]
+[alma01:2574604] [ 4] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7f86da4b338a]
+[alma01:2574604] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7f05dbb2d38a]
+[alma01:2574611] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7fee0e18abfd]
+[alma01:2574609] [ 4] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7f673c65638a]
+[alma01:2574607] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f673c6447a9]
+[alma01:2574607] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7fb0bb80e38a]
+[alma01:2574605] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7fb0bb7fc7a9]
+[alma01:2574605] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xadbfd)[0x7f9ef8a13bfd]
+[alma01:2574613] [ 4] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7f9ef8a2538a]
+[alma01:2574613] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f7ce70de7a9]
+[alma01:2574603] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7f7ce70f0607]
+[alma01:2574603] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f85b3a9d7a9]
+[alma01:2574615] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7f85b3aaf607]
+[alma01:2574615] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574615] [ 8] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f05dbb1b7a9]
+[alma01:2574611] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7f05dbb2d607]
+[alma01:2574611] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574611] [ 8] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f86da4a17a9]
+[alma01:2574604] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7f86da4b3607]
+[alma01:2574604] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574604] [ 8] /home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574604] [ 9] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf38a)[0x7fee0e19c38a]
+[alma01:2574609] [ 5] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7fb0bb80e607]
+[alma01:2574605] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574605] [ 8] /home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574605] [ 9] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7f673c656607]
+[alma01:2574607] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574607] [ 8] /home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574607] [ 9] /lib64/libc.so.6(__libc_start_main+0xe5)[0x7f673bc587e5]
+[alma01:2574607] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574603] [ 8] /home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574603] [ 9] /lib64/libc.so.6(__libc_start_main+0xe5)[0x7f7ce66f27e5]
+[alma01:2574603] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+/home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574615] [ 9] /lib64/libc.so.6(__libc_start_main+0xe5)[0x7f85b30b17e5]
+[alma01:2574615] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+[alma01:2574615] *** End of error message ***
+/home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574611] [ 9] /lib64/libc.so.6(__libc_start_main+0xe5)[0x7f05db12f7e5]
+[alma01:2574611] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+[alma01:2574611] *** End of error message ***
+/home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f9ef8a137a9]
+[alma01:2574613] [ 6] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7fee0e18a7a9]
+[alma01:2574609] [ 6] /lib64/libc.so.6(__libc_start_main+0xe5)[0x7f86d9ab57e5]
+[alma01:2574604] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+[alma01:2574604] *** End of error message ***
+/lib64/libc.so.6(__libc_start_main+0xe5)[0x7fb0bae107e5]
+[alma01:2574605] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+[alma01:2574605] *** End of error message ***
+[10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+[alma01:2574607] *** End of error message ***
+[alma01:2574603] *** End of error message ***
+/home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7f9ef8a25607]
+[alma01:2574613] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574613] [ 8] /home/rali/spack/opt/spack/linux-sandybridge/gcc-14.2.0-ayu33sgc6cw6m4pooumhyx425dh27ryn/lib64/libstdc++.so.6(+0xbf607)[0x7fee0e19c607]
+[alma01:2574609] [ 7] /home/rali/enumhyp/build/bin/enumhyp[0x416904]
+[alma01:2574609] [ 8] /home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574609] [ 9] /home/rali/enumhyp/build/bin/enumhyp(main+0x103d)[0x41e73d]
+[alma01:2574613] [ 9] /lib64/libc.so.6(__libc_start_main+0xe5)[0x7f9ef80277e5]
+[alma01:2574613] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+/lib64/libc.so.6(__libc_start_main+0xe5)[0x7fee0d79e7e5]
+[alma01:2574609] [10] /home/rali/enumhyp/build/bin/enumhyp(_start+0x2e)[0x42008e]
+[alma01:2574609] *** End of error message ***
+[alma01:2574613] *** End of error message ***
+--------------------------------------------------------------------------
+
+prterun noticed that process rank 7 with PID 2574615 on node alma01 exited on
+signal 6 (Aborted).
+--------------------------------------------------------------------------

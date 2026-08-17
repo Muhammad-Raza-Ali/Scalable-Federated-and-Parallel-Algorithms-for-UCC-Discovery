@@ -1,0 +1,11 @@
+graph,status,runtime_seconds,runtime_ns,output_size_bytes
+abalone.graph,FAILED,1.451951,1451950919,2
+amalgam1.graph,SUCCESS,1.851263,1851262733,3
+call_a_bike.graph,SUCCESS,1.409144,1409144013,3
+civil_service.graph,SUCCESS,1.529671,1529670587,3
+echocardiogram.graph,SUCCESS,1.584424,1584423958,3
+fd_reduced_15.graph,SUCCESS,1.512530,1512530143,3
+fd_reduced_30.graph,SUCCESS,1.594353,1594352613,3
+flight_1k.graph,SUCCESS,12.466226,12466225795,4
+hepatitis.graph,SUCCESS,1.476579,1476579378,3
+horse.graph,SUCCESS,1.501587,1501587029,3

@@ -1,0 +1,12 @@
+graph,legacy_file,standard_file,status,legacy_lines,standard_lines
+abalone.graph,/home/rali/enumhyp/result/abalone_MPI.out,/home/rali/enumhyp/standard/abalone_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,30,30
+amalgam1.graph,/home/rali/enumhyp/result/amalgam1_MPI.out,/home/rali/enumhyp/standard/amalgam1_STANDARD.out,EXACT_MATCH,2,2
+call_a_bike.graph,/home/rali/enumhyp/result/call_a_bike_MPI.out,/home/rali/enumhyp/standard/call_a_bike_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,24,24
+civil_service.graph,/home/rali/enumhyp/result/civil_service_MPI.out,/home/rali/enumhyp/standard/civil_service_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,82,82
+echocardiogram.graph,/home/rali/enumhyp/result/echocardiogram_MPI.out,/home/rali/enumhyp/standard/echocardiogram_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,73,73
+fd_reduced_15.graph,/home/rali/enumhyp/result/fd_reduced_15_MPI.out,/home/rali/enumhyp/standard/fd_reduced_15_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,417,417
+fd_reduced_30.graph,/home/rali/enumhyp/result/fd_reduced_30_MPI.out,/home/rali/enumhyp/standard/fd_reduced_30_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,3437,3437
+flight_1k.graph,/home/rali/enumhyp/result/flight_1k_MPI.out,/home/rali/enumhyp/standard/flight_1k_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,26653,26653
+hepatitis.graph,/home/rali/enumhyp/result/hepatitis_MPI.out,/home/rali/enumhyp/standard/hepatitis_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,349,349
+horse.graph,/home/rali/enumhyp/result/horse_MPI.out,/home/rali/enumhyp/standard/horse_STANDARD.out,SAME_SETS_DIFFERENT_ORDER,254,254
+uniprot.graph,/home/rali/enumhyp/result/uniprot_MPI.out,/home/rali/enumhyp/standard/uniprot_STANDARD.out,MISSING_LEGACY,0,0

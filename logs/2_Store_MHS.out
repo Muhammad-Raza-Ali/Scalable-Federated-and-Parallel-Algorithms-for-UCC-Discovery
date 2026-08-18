@@ -1,0 +1,182 @@
+enumhyp environment activated
+GCC:   gcc (Spack GCC) 14.2.0
+CMake: cmake version 3.30.9
+Make:  GNU Make 4.4.1
+MPI:   mpirun (Open MPI) 5.0.5
+Boost: 1.86.0
+=================================================
+EnumHyp sequential benchmark
+=================================================
+Job ID:          552056
+Node:            alma01
+MPI ranks:       16
+CPUs on node:    32
+Memory requested: 120 GB
+Graphs:          11
+=================================================
+
+CPU information:
+CPU(s):              32
+On-line CPU(s) list: 0-31
+Thread(s) per core:  2
+Core(s) per socket:  8
+Socket(s):           2
+Model name:          Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz
+NUMA node0 CPU(s):   0-7,16-23
+NUMA node1 CPU(s):   8-15,24-31
+
+Memory before experiments:
+              total        used        free      shared  buff/cache   available
+Mem:          125Gi       1.6Gi        52Gi       1.1Gi        71Gi       121Gi
+Swap:         4.0Gi       467Mi       3.5Gi
+
+
+=================================================
+Starting: abalone.graph
+Time:     Tue Aug 18 09:32:32 CEST 2026
+Output:   /home/rali/enumhyp/result/abalone_MPI.out
+=================================================
+
+Finished: abalone.graph
+Status:   SUCCESS
+Runtime:  1.532908 seconds
+Output:   260 bytes
+
+=================================================
+Starting: amalgam1.graph
+Time:     Tue Aug 18 09:32:34 CEST 2026
+Output:   /home/rali/enumhyp/result/amalgam1_MPI.out
+=================================================
+
+Finished: amalgam1.graph
+Status:   SUCCESS
+Runtime:  1.433992 seconds
+Output:   3 bytes
+
+=================================================
+Starting: call_a_bike.graph
+Time:     Tue Aug 18 09:32:36 CEST 2026
+Output:   /home/rali/enumhyp/result/call_a_bike_MPI.out
+=================================================
+
+Finished: call_a_bike.graph
+Status:   SUCCESS
+Runtime:  1.432784 seconds
+Output:   143 bytes
+
+=================================================
+Starting: civil_service.graph
+Time:     Tue Aug 18 09:32:37 CEST 2026
+Output:   /home/rali/enumhyp/result/civil_service_MPI.out
+=================================================
+
+Finished: civil_service.graph
+Status:   SUCCESS
+Runtime:  1.524979 seconds
+Output:   1032 bytes
+
+=================================================
+Starting: echocardiogram.graph
+Time:     Tue Aug 18 09:32:39 CEST 2026
+Output:   /home/rali/enumhyp/result/echocardiogram_MPI.out
+=================================================
+
+Finished: echocardiogram.graph
+Status:   SUCCESS
+Runtime:  1.508441 seconds
+Output:   545 bytes
+
+=================================================
+Starting: fd_reduced_15.graph
+Time:     Tue Aug 18 09:32:41 CEST 2026
+Output:   /home/rali/enumhyp/result/fd_reduced_15_MPI.out
+=================================================
+
+Finished: fd_reduced_15.graph
+Status:   SUCCESS
+Runtime:  1.479354 seconds
+Output:   2913 bytes
+
+=================================================
+Starting: fd_reduced_30.graph
+Time:     Tue Aug 18 09:32:42 CEST 2026
+Output:   /home/rali/enumhyp/result/fd_reduced_30_MPI.out
+=================================================
+
+Finished: fd_reduced_30.graph
+Status:   SUCCESS
+Runtime:  1.573714 seconds
+Output:   27343 bytes
+
+=================================================
+Starting: flight_1k.graph
+Time:     Tue Aug 18 09:32:44 CEST 2026
+Output:   /home/rali/enumhyp/result/flight_1k_MPI.out
+=================================================
+
+Finished: flight_1k.graph
+Status:   SUCCESS
+Runtime:  4.189649 seconds
+Output:   446798 bytes
+
+=================================================
+Starting: hepatitis.graph
+Time:     Tue Aug 18 09:32:49 CEST 2026
+Output:   /home/rali/enumhyp/result/hepatitis_MPI.out
+=================================================
+
+Finished: hepatitis.graph
+Status:   SUCCESS
+Runtime:  1.643296 seconds
+Output:   5606 bytes
+
+=================================================
+Starting: horse.graph
+Time:     Tue Aug 18 09:32:51 CEST 2026
+Output:   /home/rali/enumhyp/result/horse_MPI.out
+=================================================
+
+Finished: horse.graph
+Status:   SUCCESS
+Runtime:  1.521431 seconds
+Output:   5522 bytes
+
+=================================================
+Starting: uniprot.graph
+Time:     Tue Aug 18 09:32:52 CEST 2026
+Output:   /home/rali/enumhyp/result/uniprot_MPI.out
+=================================================
+
+Finished: uniprot.graph
+Status:   SUCCESS
+Runtime:  1.544802 seconds
+Output:   4778 bytes
+
+=================================================
+ALL DATASETS PROCESSED
+=================================================
+Finished: Tue Aug 18 09:32:54 CEST 2026
+
+Experiment summary:
+graph,status,runtime_seconds,runtime_ns,output_size_bytes
+abalone.graph,SUCCESS,1.532908,1532907762,260
+amalgam1.graph,SUCCESS,1.433992,1433991958,3
+call_a_bike.graph,SUCCESS,1.432784,1432784301,143
+civil_service.graph,SUCCESS,1.524979,1524978527,1032
+echocardiogram.graph,SUCCESS,1.508441,1508440866,545
+fd_reduced_15.graph,SUCCESS,1.479354,1479353593,2913
+fd_reduced_30.graph,SUCCESS,1.573714,1573714360,27343
+flight_1k.graph,SUCCESS,4.189649,4189648733,446798
+hepatitis.graph,SUCCESS,1.643296,1643296452,5606
+horse.graph,SUCCESS,1.521431,1521430893,5522
+uniprot.graph,SUCCESS,1.544802,1544801905,4778
+
+Final memory state:
+              total        used        free      shared  buff/cache   available
+Mem:          125Gi       1.6Gi        52Gi       1.1Gi        71Gi       121Gi
+Swap:         4.0Gi       467Mi       3.5Gi
+
+Results stored in:
+/home/rali/enumhyp/result
+Statistics stored in:
+/home/rali/enumhyp/stats/experiment_552056.csv

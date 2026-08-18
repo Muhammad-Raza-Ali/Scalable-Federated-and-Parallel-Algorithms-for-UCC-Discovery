@@ -15,6 +15,29 @@
 #define EXTENDABLE 1
 #define MINIMAL 2
 
+// updated 17-08-2026: 19:00 UHR
+// Keep the process rank available to save() even after the legacy MPI path
+// finalizes MPI. This prevents worker ranks from opening the shared output.
+namespace {
+	int output_mpi_rank = 0;
+	bool output_mpi_rank_known = false;
+
+	void remember_output_mpi_rank() {
+		if (output_mpi_rank_known) return;
+
+		int mpi_initialized = 0;
+		MPI_Initialized(&mpi_initialized);
+		if (!mpi_initialized) return;
+
+		int mpi_finalized = 0;
+		MPI_Finalized(&mpi_finalized);
+		if (mpi_finalized) return;
+
+		MPI_Comm_rank(MPI_COMM_WORLD, &output_mpi_rank);
+		output_mpi_rank_known = true;
+	}
+}
+
 Hypergraph::Hypergraph() {
 }
 
@@ -66,8 +89,15 @@ void Hypergraph::print_edges() const {
 }
 
 void Hypergraph::save(std::string path) const {
+	// updated 17-08-2026: 19:00 UHR
+	// Only rank 0 may create or truncate a shared result file. Multiple MPI
+	// streams writing the same path create the NUL/space gaps seen after the
+	// vertex-count line, even when the deserialized MHS records are valid.
+	remember_output_mpi_rank();
+	if (output_mpi_rank_known && output_mpi_rank != 0) return;
+
 	std::ofstream outfile;
-	outfile.open(path);
+	outfile.open(path, std::ios::out | std::ios::trunc);
 	outfile << m_num_vertices << std::endl;
 	for (auto e : m_edges) {
 		auto num_vertices = e.count();
@@ -291,6 +321,12 @@ void Hypergraph::assign_extendable_task(
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+	// updated 18-08-2026: 12:00 UHR
+	// Cache the rank while MPI is active because save() runs after MPI_Finalize()
+	// in this legacy enumeration path.
+	output_mpi_rank = rank;
+	output_mpi_rank_known = true;
+
     if (rank == 0) {
         std::queue<int> available_workers;
         int num_processes;
@@ -409,6 +445,19 @@ void Hypergraph::assign_extendable_task(
 
 			// Check if the worker is signaling that it's free
 			if (recv_r == 0) {
+				// updated 17-08-2026: 19:00 UHR
+				// Merge the worker-local minimal hitting sets carried by the
+				// worker-finished response into the master-owned result list.
+				for (size_t i = 0; i + m_num_vertices <= serialized_hitting_sets.size(); i += m_num_vertices) {
+					edge set(m_num_vertices);
+					for (size_t j = 0; j < m_num_vertices; ++j) {
+						set[j] = serialized_hitting_sets[i + j];
+					}
+					if (set.none()) continue;
+					
+					minimal_hitting_sets.push_back(set);
+				}
+
 				// Worker is free, add it back to the pool of available workers
 				available_workers.push(source);
 				// std::cout << "Master: Worker " << source << " is free (r = 0).\n";
@@ -455,25 +504,32 @@ void Hypergraph::worker() {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     // std::cout << "Worker " << rank << " started and waiting for tasks from master (rank 0).\n";
 
-    bool extend = false;
+    // updated 17-08-2026: 19:00 UHR
+    // Preserve all three oracle states. In particular, MINIMAL must never be
+    // converted to true and processed as EXTENDABLE.
+    int extend_state = NOT_EXTENDABLE;
     std::vector<int> a_vec(m_num_vertices);
     std::vector<int> b_vec(m_num_vertices);
     edge::size_type r;
 
     int hitting_sets_size;
     edge_vec minimal_hitting_sets;
+    // updated 17-08-2026: 19:00 UHR
+    // Results found while processing the current local branch are kept here
+    // until this worker reports that it is idle.
+    edge_vec local_hitting_sets;
     std::vector<int> serialized_hitting_sets;
     
     edge a;
     edge b;
-    bool terminate;
 
     while (true) {
 
-        if (!extend) {
-            terminate = true;
-
-            MPI_Request recv_requests[5];
+        if (extend_state != EXTENDABLE) {
+            // updated 17-08-2026: 19:00 UHR
+            // A stopped local branch waits for the next task. Receive the size
+            // metadata before receiving the variable-length serialized data.
+            MPI_Request recv_requests[4];
 
             // Non-blocking receive for a_vec
             MPI_Irecv(a_vec.data(), a_vec.size(), MPI_INT, 0, 1, MPI_COMM_WORLD, &recv_requests[0]);
@@ -484,29 +540,26 @@ void Hypergraph::worker() {
             // Non-blocking receive for hitting_sets_size
             MPI_Irecv(&hitting_sets_size, 1, MPI_INT, 0, 3, MPI_COMM_WORLD, &recv_requests[2]);
 
-            // Non-blocking receive for serialized_hitting_sets (placeholder size initially)
-            MPI_Irecv(serialized_hitting_sets.data(), serialized_hitting_sets.size(), MPI_INT, 0, 4, MPI_COMM_WORLD, &recv_requests[3]);
-
             // Non-blocking receive for r
-            MPI_Irecv(&r, 1, MPI_UNSIGNED_LONG, 0, 5, MPI_COMM_WORLD, &recv_requests[4]);
+            MPI_Irecv(&r, 1, MPI_UNSIGNED_LONG, 0, 5, MPI_COMM_WORLD, &recv_requests[3]);
 
-            // Wait for a_vec to check for termination signal
-            MPI_Wait(&recv_requests[0], &status);
+            // Wait for the fixed-size task data
+            MPI_Waitall(4, recv_requests, MPI_STATUSES_IGNORE);
 
             // Check for termination signal in a_vec
             if (!a_vec.empty() && a_vec[0] == -1) {
+                // Receive the termination placeholder sent with tag 4 before exiting.
+                std::vector<int> termination_placeholder(2);
+                MPI_Recv(termination_placeholder.data(), termination_placeholder.size(), MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
                 // std::cout << "#### Worker " << rank << " received Termination signal.\n";
                 break; // Exit the worker loop immediately
             }
 
-            // Wait for hitting_sets_size
-            MPI_Wait(&recv_requests[2], &status);
-
             // Resize serialized_hitting_sets based on hitting_sets_size
             serialized_hitting_sets.resize(hitting_sets_size);
 
-            // Wait for all other receives to complete
-            MPI_Waitall(4, &recv_requests[1], MPI_STATUSES_IGNORE);
+            // Receive serialized minimal_hitting_sets after allocating its buffer
+            MPI_Recv(serialized_hitting_sets.data(), hitting_sets_size, MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
 
             // Deserialize minimal_hitting_sets
             minimal_hitting_sets.clear();
@@ -542,42 +595,27 @@ void Hypergraph::worker() {
 		// std::cout << r <<std::endl;
 
         // Check extendability
-		if(terminate){
-        	extend = extendable(a, b);
-		}
+        // updated 17-08-2026: 19:00 UHR
+        extend_state = extendable(a, b);
 
-        if (extend) {
-            if (r == m_num_vertices) {
-                minimal_hitting_sets.push_back(a);  // Correct edge assignment
-				// std::cout << "\nWorker " << rank << " found set --  ";
-				// std::cout << "\nWorker " << rank << " terminating with minimal hitting set: ";
-				// for (size_t i = 0; i < a.size(); ++i) {
-				// 	std::cout << a[i] << " ";
-				// }
-				// std::cout << "\n";
+        if (extend_state == MINIMAL) {
+            // A minimal state is a completed result and must not be extended.
+            local_hitting_sets.push_back(a);
+			// std::cout << "\nWorker " << rank << " found set --  ";
+			// std::cout << "\nWorker " << rank << " terminating with minimal hitting set: ";
+			// for (size_t i = 0; i < a.size(); ++i) {
+			// 	std::cout << a[i] << " ";
+			// }
+			// std::cout << "\n";
 
-                if (m_configuration.collect_hitting_set_statistics) {
-                    auto now = Clock::now();
-                    m_hitting_set_stats.add_record({ edge_to_string(a), ns_string(m_hitting_set_timestamp, now) });
-                    m_hitting_set_timestamp = Clock::now();
-                }
-				terminate = false;
-				extend = false;
+            if (m_configuration.collect_hitting_set_statistics) {
+                auto now = Clock::now();
+                m_hitting_set_stats.add_record({ edge_to_string(a), ns_string(m_hitting_set_timestamp, now) });
+                m_hitting_set_timestamp = Clock::now();
+            }
+        }
 
-				MPI_Request send_requests[5];
-				int req_count = 0;
-				r = 0; // Indicate worker is free
-
-				// Non-blocking send to master
-				MPI_Isend(a_vec.data(), a_vec.size(), MPI_INT, 0, 1, MPI_COMM_WORLD, &send_requests[req_count++]);
-				MPI_Isend(b_vec.data(), b_vec.size(), MPI_INT, 0, 2, MPI_COMM_WORLD, &send_requests[req_count++]);
-				MPI_Isend(&hitting_sets_size, 1, MPI_INT, 0, 3, MPI_COMM_WORLD, &send_requests[req_count++]);
-				MPI_Isend(serialized_hitting_sets.data(), hitting_sets_size, MPI_INT, 0, 4, MPI_COMM_WORLD, &send_requests[req_count++]);
-				MPI_Isend(&r, 1, MPI_UNSIGNED_LONG, 0, 5, MPI_COMM_WORLD, &send_requests[req_count++]);
-
-				// Wait for all sends to complete
-				MPI_Waitall(req_count, send_requests, MPI_STATUSES_IGNORE);
-            }else {
+        if (extend_state == EXTENDABLE && r < m_num_vertices) {
 				// Proper assignment with safer Boost functions
 				edge xv = a, yv = b;
 				xv.set(r); 
@@ -614,15 +652,26 @@ void Hypergraph::worker() {
 				a = xv;
 
 				// Convert edge `a` back to a vector for debugging
-				std::vector<int> a_vec(a.size());
 				for (size_t i = 0; i < a.size(); ++i) a_vec[i] = a[i];
 
 				// Debug output for `a`
 				// std::cout << "\n a = xv: ";
 				// for (const auto& v : a_vec) std::cout << v << " ";
 				// std::cout << std::endl;
+				continue;
+		}
+
+		// updated 17-08-2026: 19:00 UHR
+		// MINIMAL and NOT_EXTENDABLE both stop the local branch. Serialize all
+		// locally accumulated results and return them once with the idle response.
+		serialized_hitting_sets.clear();
+		for (const auto &set : local_hitting_sets) {
+			for (size_t i = 0; i < set.size(); ++i) {
+				serialized_hitting_sets.push_back(set[i] ? 1 : 0);
 			}
-        }else{
+		}
+		hitting_sets_size = static_cast<int>(serialized_hitting_sets.size());
+
 			MPI_Request send_requests[5];
 			int req_count = 0;
 			r = 0; // Indicate worker is free
@@ -637,8 +686,14 @@ void Hypergraph::worker() {
 			// Wait for all sends to complete
 			MPI_Waitall(req_count, send_requests, MPI_STATUSES_IGNORE);
 
+			// updated 17-08-2026: 19:00 UHR
+			// The master owns the batch after all sends complete, so the worker can
+			// safely clear it before accepting another task.
+			local_hitting_sets.clear();
+			serialized_hitting_sets.clear();
+			extend_state = NOT_EXTENDABLE;
+
 			// std::cout << "Worker " << rank << " is free (r = 0) and reported back to master.\n";
-		}
     }
 	return;
 }

@@ -1,29 +1,18 @@
 #!/bin/bash
 
-#SBATCH -N 4
-#SBATCH --job-name=Thesis
-#SBATCH --nodes=1
-#SBATCH --ntasks=16
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=120G
-#SBATCH --exclusive
-#SBATCH --time=1-00:00:00
-#SBATCH --output=/home/rali/enumhyp/logs/enum-all-%j.out
-#SBATCH --error=/home/rali/enumhyp/logs/enum-all-%j.err
-
 set -uo pipefail
 
 source "$HOME/activate-enumhyp.sh"
 
 EXECUTABLE="$HOME/enumhyp/build/bin/enumhyp"
 DATA_DIR="$HOME/enumhyp/data"
-RESULT_DIR="$HOME/enumhyp/result"
-LOG_DIR="$HOME/enumhyp/logs"
-STATS_DIR="$HOME/enumhyp/stats"
+RESULT_DIR="$HOME/enumhyp/standard"
+LOG_DIR="$HOME/enumhyp/logs/standard"
+STATS_DIR="$HOME/enumhyp/stats/standard"
 
 mkdir -p "$RESULT_DIR" "$LOG_DIR" "$STATS_DIR"
 
-SUMMARY="$STATS_DIR/experiment_${SLURM_JOB_ID}.csv"
+SUMMARY="$STATS_DIR/standard_experiment_$(date +%Y%m%d_%H%M%S).csv"
 
 GRAPHS=(
     "abalone.graph"
@@ -43,14 +32,14 @@ GRAPHS=(
 echo "graph,status,runtime_seconds,runtime_ns,output_size_bytes" > "$SUMMARY"
 
 echo "================================================="
-echo "EnumHyp sequential benchmark"
+echo "EnumHyp STANDARD benchmark"
 echo "================================================="
-echo "Job ID:          $SLURM_JOB_ID"
-echo "Node:            $(hostname)"
-echo "MPI ranks:       $SLURM_NTASKS"
-echo "CPUs on node:    $(nproc)"
-echo "Memory requested: 120 GB"
-echo "Graphs:          ${#GRAPHS[@]}"
+echo "Implementation:   standard"
+echo "Executable:       $EXECUTABLE"
+echo "Data directory:   $DATA_DIR"
+echo "Result directory: $RESULT_DIR"
+echo "Graphs:           ${#GRAPHS[@]}"
+echo "Started:          $(date)"
 echo "================================================="
 
 echo
@@ -73,8 +62,9 @@ for GRAPH_NAME in "${GRAPHS[@]}"; do
 
     GRAPH="$DATA_DIR/$GRAPH_NAME"
     BASE="${GRAPH_NAME%.graph}"
-    OUTPUT="$RESULT_DIR/${BASE}_MPI.out"
-    RUN_LOG="$LOG_DIR/${BASE}_${SLURM_JOB_ID}.log"
+
+    OUTPUT="$RESULT_DIR/${BASE}_STANDARD.out"
+    RUN_LOG="$LOG_DIR/${BASE}_standard.log"
 
     echo
     echo "================================================="
@@ -89,13 +79,15 @@ for GRAPH_NAME in "${GRAPHS[@]}"; do
         continue
     fi
 
+    # Remove an old result so that this run cannot be confused
+    # with output from an earlier experiment.
+    rm -f "$OUTPUT"
+
     START_NS=$(date +%s%N)
 
-    mpirun \
-        -np "$SLURM_NTASKS" \
-        "$EXECUTABLE" \
+    "$EXECUTABLE" \
         enumerate \
-        -I legacy \
+        -I standard \
         "$GRAPH" \
         -o "$OUTPUT" \
         > "$RUN_LOG" 2>&1
@@ -105,6 +97,7 @@ for GRAPH_NAME in "${GRAPHS[@]}"; do
     END_NS=$(date +%s%N)
 
     RUNTIME_NS=$((END_NS - START_NS))
+
     RUNTIME_SEC=$(awk \
         -v ns="$RUNTIME_NS" \
         'BEGIN {printf "%.6f", ns / 1000000000}')
@@ -126,6 +119,7 @@ for GRAPH_NAME in "${GRAPHS[@]}"; do
     echo "Status:   $STATUS"
     echo "Runtime:  $RUNTIME_SEC seconds"
     echo "Output:   $OUTPUT_SIZE bytes"
+    echo "Run log:  $RUN_LOG"
 
     echo \
         "$GRAPH_NAME,$STATUS,$RUNTIME_SEC,$RUNTIME_NS,$OUTPUT_SIZE" \
@@ -135,9 +129,10 @@ done
 
 echo
 echo "================================================="
-echo "ALL DATASETS PROCESSED"
+echo "ALL STANDARD DATASETS PROCESSED"
 echo "================================================="
 echo "Finished: $(date)"
+
 echo
 echo "Experiment summary:"
 cat "$SUMMARY"
@@ -147,8 +142,13 @@ echo "Final memory state:"
 free -h
 
 echo
-echo "Results stored in:"
+echo "Standard results stored in:"
 echo "$RESULT_DIR"
 
-echo "Statistics stored in:"
+echo
+echo "Individual logs stored in:"
+echo "$LOG_DIR"
+
+echo
+echo "Summary stored in:"
 echo "$SUMMARY"
